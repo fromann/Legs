@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ss.mapper.OrdersMapper">
+    <update id="edit">
+        update orders
+        <set>
+            <if test="task != null and task != ''">task = #{task},</if>
+            <if test="price != null and price != ''">price = #{price},</if>
+            receiver = #{receiver},
+            <if test="state != null">state = #{state}</if>
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+    <!--    批量删除员工-->
+    <delete id="delete">
+        delete
+        from orders
+        where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <delete id="deleteByUser">
+        delete
+        from orders
+        where sender in
+        <foreach collection="usernames" item="sender" open="(" separator="," close=")">
+            #{sender}
+        </foreach>
+
+
+    </delete>
+    <select id="list" resultType="cn.ss.pojo.Order">
+        select *
+        from orders
+        <where>
+            <if test="task != null and task != ''">and task like concat('%',#{task},'%')</if>
+            <if test="sender != null and sender != ''">and sender=#{sender}</if>
+            <if test="receiver != null and receiver != ''">and receiver=#{receiver}</if>
+            <if test="state != null">and state = #{state}</if>
+        </where>
+    </select>
+</mapper>

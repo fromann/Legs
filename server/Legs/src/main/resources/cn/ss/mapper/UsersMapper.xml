@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ss.mapper.UsersMapper">
+    <update id="edit">
+        update user
+        <set>
+            <if test="password != null and password != ''">password = #{password},</if>
+            <if test="name != null and name != ''">`name` = #{name},</if>
+            <if test="phone != null and phone !=''">phone = #{phone},</if>
+            <if test="type != null">`type` = #{type}</if>
+        </set>
+        <where>
+            username = #{username}
+        </where>
+    </update>
+    <!--    批量删除员工-->
+    <delete id="delete">
+        delete
+        from user
+        where username in
+        <foreach collection="usernames" item="username" open="(" separator="," close=")">
+            #{username}
+        </foreach>
+    </delete>
+    <select id="list" resultType="cn.ss.pojo.User">
+        select *
+        from user
+        <where>
+            <if test="username != null and username != ''">and username = #{username}</if>
+            <if test="name != null and name != ''">and `name` like concat('%',#{name},'%')</if>
+            <if test="phone != null and phone != ''">and phone = #{phone}</if>
+            <if test="type != null">and `type` = #{type}</if>
+        </where>
+    </select>
+</mapper>
