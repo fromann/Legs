@@ -5,6 +5,7 @@
 软件使用IDea WebStorm
 
 ## 文件树
+~~~ txt
 Legs
 ├─front 新版前端项目文件夹
 ├─old 旧版前后项目文件夹
@@ -12,6 +13,8 @@ Legs
 │  └─web 旧版 前端代码
 └─server 新版后端端项目文件夹
 └─leg-sql.sql    mysql 建表语句
+~~~
+
     
 ## 新版Legs
 
